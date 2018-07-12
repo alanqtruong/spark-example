@@ -6,7 +6,7 @@ import org.apache.spark.sql.SparkSession
 
 /**
   * Setup SparkSession
-  * @author recklessN1nja
+  * @author alanqtruong
   */
 object SparkConfig {
 

@@ -4,7 +4,7 @@ import org.apache.spark.sql.functions._
 
 /**
   * Simple Spark SQL example showing the top 1000 movies by ratings
-  * @author recklessN1nja
+  * @author alanqtruong
   */
 object ExampleSparkSQL {
 
