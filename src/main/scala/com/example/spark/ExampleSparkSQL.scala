@@ -1,9 +1,10 @@
 package com.example.spark
 
-import org.apache.spark.sql.functions._
+import org.apache.spark.sql.functions.{col, _}
 
 /**
   * Simple Spark SQL example showing the top 1000 movies by ratings
+  *
   * @author alanqtruong
   */
 object ExampleSparkSQL {
@@ -25,13 +26,14 @@ object ExampleSparkSQL {
 
     //average the ratings for each movieId
     val avgRatingsDF = ratingsDF.groupBy("movieId")
-      .agg(avg("rating").as("avgRating"))
+      .agg(avg("rating").as("avgRating"), count("rating").as("ratingCount"))
 
     //join movies with average rating using movieId and sort by desc
     val movieRatingsDF = moviesDF.join(avgRatingsDF, "movieId")
       .select(col("title"),
-        format_number(col("avgRating"), 2).as("Average Rating")
-      ).sort(desc("Average Rating"))
+        format_number(col("avgRating"), 2).as("Average Rating"),
+        col("ratingCount").as("Rating Count")
+      ).sort(desc("Average Rating"), desc("Rating Count"))
 
     //show top 1000 movies based on average ratings
     movieRatingsDF.show(1000, truncate = false)
